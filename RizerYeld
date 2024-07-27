@@ -52,6 +52,7 @@ Players.PlayerAdded:Connect(function(plr)
           if v:IsA("Accessory") then
             local part2 = v.Handle
             part2.Transparency = 0
+          end
         end
       end
     end
