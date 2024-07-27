@@ -1,0 +1,59 @@
+local WS = game:GetService("Workspace")
+local RS = game:GetService("ReplicatedStorage")
+local SSS = game:GetService("ServerScriptService")
+local TCS = game:GetService("TextChatService")
+
+local HttpS = game:GetService("HttpService")
+local Debris = game:GetService("Debris")
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local char = Player.Character
+local humanoid = char:WaitForChild("Humanoid")
+
+Players.PlayerAdded:Connect(function(plr)
+  plr.Chatted:Connect(function(msg)
+    print(plr.Name.." : "..msg)
+    if plr.Name == Player.Name then
+      if msg == "/esp" then
+        while wait(0.1) do
+          for _, v in pairs(Players:GetPlayers()) do
+            if not v.Character:FindFirstChild("RizerESP") then
+              local ESP = Instance.new("Highlight")
+              ESP.Name = "RizerESP"
+              ESP.FillTransparency = 0.2
+              ESP.DepthMode = Enum.DepthMode.AlwaysOnTop
+              ESP.Parent = v.Character
+            end
+          end
+        end
+      elseif msg == "/unesp" then
+        for _, v in pairs(Players:GetPlayers()) do
+          if v.Character:FindFirstChild("RizerESP") then
+            local DestroyESP = v.Character.RizerESP
+            Debris:AddItem(DestroyESP, 0.1)
+          end
+        end
+      elseif msg == "/invisible" then
+        for _, v in pairs(char:GetChildren()) do
+          if v:IsA("MeshPart") or v:IsA("Part") then
+            v.Transparency = 1
+          end
+          if v:IsA("Accessory") then
+            local part = v.Handle
+            part.Transparency = 1
+          end
+        end
+      elseif msg == "/uninvisible" then
+        for _, v in pairs(char:GetChildren()) do
+          if v:IsA("MeshPart") or v:IsA("Part") then
+            v.Transparency = 0
+          end
+          if v:IsA("Accessory") then
+            local part2 = v.Handle
+            part2.Transparency = 0
+        end
+      end
+    end
+  end)
+end)
